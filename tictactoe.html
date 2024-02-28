@@ -308,6 +308,8 @@
                     }
                     
                     if (r1O||r2O||r3O||c1O||c2O||c3O||ldO||rdO){
+                        document.getElementById('i_Xresult').innerHTML='X Lost!';
+                        document.getElementById('i_Oresult').innerHTML='O Won!';
                         matchstatus=1;
                         document.getElementById('i_replay').style.visibility='visible';
                         return;

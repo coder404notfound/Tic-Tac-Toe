@@ -39,17 +39,18 @@
             height: 100%;
             width: 100%;
         }
-        .c_oddcell{
-            background-color: pink;
-        }
         .c_evencell{
             background-color: gray;
+        }
+        .c_oddcell{
+            background-color: pink;
         }
         #i_resultbox{
             height: 20%;
             width: 40%;
             border: 2px solid black;
             margin-top: 2%;
+            margin-bottom: 2%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -84,36 +85,56 @@
             background-color: orange;
         }
 
+        #i_replay{
+            border: 2px solid black;
+            width: 5%;
+            height: 5%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background-color: grey;
+            color: black;
+            cursor: pointer;
+            transition: background-color 2s;
+            transition: color 2s;
+            transition: border-color 2s;
+            transition: border-radius 2s;
+            visibility: hidden;
+        }
+
+
+
     </style>
 </head>
 <body onload="return start()">
 
     <div id="i_playbox" name="n_playbox">
-        <div id="i_cell0" name="n_cell0" class="c_oddcell c_cell" onclick="return clicked(0, id)">
+        <div id="i_cell0" name="n_cell0" class="c_evencell c_cell" onclick="return clicked(0, id)">
             -
         </div>
-        <div id="i_cell1" name="n_cell1" class="c_evencell c_cell" onclick="return clicked(1, id)">
+        <div id="i_cell1" name="n_cell1" class="c_oddcell c_cell" onclick="return clicked(1, id)">
             -
         </div>
-        <div id="i_cell2" name="n_cell2" class="c_oddcell c_cell" onclick="return clicked(2, id)">
+        <div id="i_cell2" name="n_cell2" class="c_evencell c_cell" onclick="return clicked(2, id)">
             -
         </div>
-        <div id="i_cell3" name="n_cell3" class="c_evencell c_cell" onclick="return clicked(3, id)">
+        <div id="i_cell3" name="n_cell3" class="c_oddcell c_cell" onclick="return clicked(3, id)">
             -
         </div>
-        <div id="i_cell4" name="n_cell4" class="c_oddcell c_cell" onclick="return clicked(4, id)">
+        <div id="i_cell4" name="n_cell4" class="c_evencell c_cell" onclick="return clicked(4, id)">
             -
         </div>
-        <div id="i_cell5" name="n_cell5" class="c_evencell c_cell" onclick="return clicked(5, id)">
+        <div id="i_cell5" name="n_cell5" class="c_oddcell c_cell" onclick="return clicked(5, id)">
             -
         </div>
-        <div id="i_cell6" name="n_cell6" class="c_oddcell c_cell" onclick="return clicked(6, id)">
+        <div id="i_cell6" name="n_cell6" class="c_evencell c_cell" onclick="return clicked(6, id)">
             -
         </div>
-        <div id="i_cell7" name="n_cell7" class="c_evencell c_cell" onclick="return clicked(7, id)">
+        <div id="i_cell7" name="n_cell7" class="c_oddcell c_cell" onclick="return clicked(7, id)">
             -
         </div>
-        <div id="i_cell8" name="n_cell8" class="c_oddcell c_cell" onclick="return clicked(8, id)">
+        <div id="i_cell8" name="n_cell8" class="c_evencell c_cell" onclick="return clicked(8, id)">
             -
         </div>
     </div>
@@ -130,23 +151,75 @@
         </div>
     </div>
 
+    <div id="i_replay" name="n_replay" onmouseover="return replayhoverin()" onmouseout="return replayhoverout()" onclick="return replayclick()">
+        Replay
+    </div>
+    
     <script>
         function start(){
-
+            
             chance='X';
+            matchstatus=0;
+            count=0;
 
         }
         
+        function replayhoverin(){
+            document.getElementById('i_replay').style.background='black';
+            document.getElementById('i_replay').style.color='gray';
+            document.getElementById('i_replay').style.borderColor='gray';
+            document.getElementById('i_replay').style.borderRadius='20px';
+        }
+        
+        function replayhoverout(){
+            document.getElementById('i_replay').style.background='grey';
+            document.getElementById('i_replay').style.color='black';
+            document.getElementById('i_replay').style.borderColor='black';
+            document.getElementById('i_replay').style.borderRadius='10px';
+        }
+        
+        function replayclick(){
+            document.getElementsByClassName('c_cell')[0].innerHTML='-';
+            document.getElementsByClassName('c_cell')[1].innerHTML='-';
+            document.getElementsByClassName('c_cell')[2].innerHTML='-';
+            document.getElementsByClassName('c_cell')[3].innerHTML='-';
+            document.getElementsByClassName('c_cell')[4].innerHTML='-';
+            document.getElementsByClassName('c_cell')[5].innerHTML='-';
+            document.getElementsByClassName('c_cell')[6].innerHTML='-';
+            document.getElementsByClassName('c_cell')[7].innerHTML='-';
+            document.getElementsByClassName('c_cell')[8].innerHTML='-';
+            document.getElementById('i_replay').style.visibility='hidden';
+            document.getElementsByClassName('c_evencell')[0].style.background='gray';
+            document.getElementsByClassName('c_evencell')[1].style.background='gray';
+            document.getElementsByClassName('c_evencell')[2].style.background='gray';
+            document.getElementsByClassName('c_evencell')[3].style.background='gray';
+            document.getElementsByClassName('c_evencell')[4].style.background='gray';
+            document.getElementsByClassName('c_oddcell')[0].style.background='pink';
+            document.getElementsByClassName('c_oddcell')[1].style.background='pink';
+            document.getElementsByClassName('c_oddcell')[2].style.background='pink';
+            document.getElementsByClassName('c_oddcell')[3].style.background='pink';
+            document.getElementsByClassName('c_result')[0].innerHTML='?';
+            document.getElementsByClassName('c_result')[1].innerHTML='?';
+            count=0;
+            matchstatus=0;
+        }
+
         function clicked(num, id){
             cellno=num;
             id=id;
 
-
+            if (matchstatus==1){
+                alert('Match Ended!');
+                return;
+            }
+            
             if (chance=='X'){
+
                 if (document.getElementById(id).innerHTML.trim()=='-'){
                     document.getElementById(id).innerHTML='X';
                     document.getElementById(id).style.background='yellow';
 
+                    count=count+1;
                     
                     c0=document.getElementById('i_cell0').innerHTML.trim();
                     c1=document.getElementById('i_cell1').innerHTML.trim();
@@ -170,11 +243,21 @@
                     c3X=arrX[2] && arrX[5] && arrX[8];
                     ldX=arrX[0] && arrX[4] && arrX[8];
                     rdX=arrX[2] && arrX[4] && arrX[6];
-
+                    
+                    if (count==9){
+                        matchstatus=1;
+                        document.getElementById('i_Oresult').innerHTML='Draw!';
+                        document.getElementById('i_Xresult').innerHTML='Draw!';
+                        document.getElementById('i_replay').style.visibility='visible';
+                        count=0;
+                        return;
+                    }
                     
                     if (r1X||r2X||r3X||c1X||c2X||c3X||ldX||rdX){
-                        document.getElementById('i_Xresult').innerHTML='X Won!'
-                        document.getElementById('i_Oresult').innerHTML='O Lost!'
+                        document.getElementById('i_Xresult').innerHTML='X Won!';
+                        document.getElementById('i_Oresult').innerHTML='O Lost!';
+                        matchstatus=1;
+                        document.getElementById('i_replay').style.visibility='visible';
                         return;
                     }
                     chance='O';
@@ -189,8 +272,9 @@
                 if (document.getElementById(id).innerHTML.trim()=='-'){
                     document.getElementById(id).innerHTML='O';
                     document.getElementById(id).style.background='orange';
-
-
+                    
+                    count=count+1;
+                    
                     c0=document.getElementById('i_cell0').innerHTML.trim();
                     c1=document.getElementById('i_cell1').innerHTML.trim();
                     c2=document.getElementById('i_cell2').innerHTML.trim();
@@ -204,7 +288,7 @@
                     arrX=[c0=='X', c1=='X', c2=='X', c3=='X', c4=='X', c5=='X', c6=='X', c7=='X', c8=='X'];
                     arrO=[c0=='O', c1=='O', c2=='O', c3=='O', c4=='O', c5=='O', c6=='O', c7=='O', c8=='O'];
 
-
+                    
                     r1O=arrO[0] && arrO[1] && arrO[2];
                     r2O=arrO[3] && arrO[4] && arrO[5];
                     r3O=arrO[6] && arrO[7] && arrO[8];
@@ -213,11 +297,19 @@
                     c3O=arrO[2] && arrO[5] && arrO[8];
                     ldO=arrO[0] && arrO[4] && arrO[8];
                     rdO=arrO[2] && arrO[4] && arrO[6];
-
-    
+                    
+                    if (count==9){
+                        matchstatus=1;
+                        document.getElementById('i_Oresult').innerHTML='Draw!';
+                        document.getElementById('i_Xresult').innerHTML='Draw!';
+                        document.getElementById('i_replay').style.visibility='visible';
+                        count=0;
+                        return;
+                    }
+                    
                     if (r1O||r2O||r3O||c1O||c2O||c3O||ldO||rdO){
-                        document.getElementById('i_Oresult').innerHTML='O Won!'
-                        document.getElementById('i_Xresult').innerHTML='X Lost!'
+                        matchstatus=1;
+                        document.getElementById('i_replay').style.visibility='visible';
                         return;
                     }
                     chance='X'
